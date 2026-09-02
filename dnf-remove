@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# fzf-remove: fuzzy-search installed dnf packages and remove selection(s)
+
+set -euo pipefail
+
+selected=$(dnf list --installed \
+    | awk 'NR>1 {print $1}' \
+    | fzf --multi --prompt="Remove> " --preview 'dnf info {1}' --preview-window=right:60%)
+
+if [[ -z "$selected" ]]; then
+    echo "No package selected."
+    exit 0
+fi
+
+echo "$selected" | xargs sudo-rs dnf remove -y
