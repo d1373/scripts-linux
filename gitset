@@ -5,10 +5,12 @@ set -euo pipefail
 NAME_1="d1373"
 EMAIL_1="dpersonal1373@gmail.com"
 KEY_1="63701FED5603E0A5"
+SSH_1="$HOME/.ssh/id_ed25519"
 
 NAME_2="dhyeyswadia"
 EMAIL_2="swadiadhyey13@gmail.com"
 KEY_2="B102F7292C4853F7"
+SSH_2="$HOME/.ssh/swadiadhyey"
 # -------------------------------------------
 
 if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
@@ -23,10 +25,10 @@ read -rp "Enter choice [1/2]: " choice
 
 case "$choice" in
     1)
-        NAME="$NAME_1"; EMAIL="$EMAIL_1"; KEY="$KEY_1"
+        NAME="$NAME_1"; EMAIL="$EMAIL_1"; KEY="$KEY_1"; SSH_KEY="$SSH_1"
         ;;
     2)
-        NAME="$NAME_2"; EMAIL="$EMAIL_2"; KEY="$KEY_2"
+        NAME="$NAME_2"; EMAIL="$EMAIL_2"; KEY="$KEY_2"; SSH_KEY="$SSH_2"
         ;;
     *)
         echo "Invalid choice. Enter 1 or 2." >&2
@@ -34,10 +36,11 @@ case "$choice" in
         ;;
 esac
 
-git config user.name "$NAME"
-git config user.email "$EMAIL"
-git config user.signingkey "$KEY"
-git config commit.gpgsign true
+git config --local user.name "$NAME"
+git config --local user.email "$EMAIL"
+git config --local user.signingkey "$KEY"
+git config --local commit.gpgsign true
+git config --local core.sshCommand "ssh -i $SSH_KEY -o IdentitiesOnly=yes"
 
 echo "Local git config set for this repo:"
-git config --local --get-regexp '^user\.|^commit\.gpgsign'
+git config --local --get-regexp '^user\.|^commit\.gpgsign|^core\.sshcommand'
