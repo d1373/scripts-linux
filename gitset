@@ -4,11 +4,11 @@ set -euo pipefail
 # --- Configure your two identities here ---
 NAME_1="d1373"
 EMAIL_1="dpersonal1373@gmail.com"
-KEY_1="DAE844FCC7BAB2FA"
+KEY_1="63701FED5603E0A5"
 
 NAME_2="dhyeyswadia"
 EMAIL_2="swadiadhyey13@gmail.com"
-KEY_2="78FC577481400D99"
+KEY_2="B102F7292C4853F7"
 # -------------------------------------------
 
 if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
